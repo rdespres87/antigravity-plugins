@@ -1,0 +1,4 @@
+{
+  "name": "idiomatic-craft",
+  "description": "Global language-agnostic code idiomaticity standards, enforcing native patterns, strict typing, and zero anti-patterns across Rust, TypeScript, Python, and C/C++."
+}
