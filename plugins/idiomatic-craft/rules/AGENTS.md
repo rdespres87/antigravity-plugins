@@ -119,12 +119,17 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
 
 Across EVERY task (feature development, refactoring, or bug fix), the agent MUST explicitly trace progress using clear phase banners and provide a comprehensive test protocol:
 
-1. **Explicit Phase Banners**:
-   - `[PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` : Architecture, coding, strict idiomatic craft.
-   - `[PHASE 2/5 : VALIDATION NATIVE & TESTS CI]` : Native toolchain verification (`cargo test && cargo clippy`, `tsc`, `pytest`).
-   - `[PHASE 3/5 : AUDIT LOCAL IMPITOYABLE (0 TOKENS)]` : Adversarial audit of `git diff` via LM Studio (`execute_local_task`).
-   - `[PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : *(If rejected)* Resolving `[BLOCKING]` defects and re-auditing.
-   - `[PHASE 5/5 : RAPPORT DÉTAILLÉ & PROTOCOLE DE TEST]` : Final restitution before commit gate.
+1. **Explicit Phase Banners (MANDATORY FIRST-TOKEN OUTPUT BEFORE ANY TOOL CALL)**:
+   - **Zero Silent Tool Calls**: You are strictly forbidden from calling tools (`read_file`, `edit_file`, `run_command`, etc.) silently with empty prose.
+   - **First Visible Markdown Token**: At the very start of every turn and **BEFORE invoking any tool**, you MUST output visible text in the chat declaring the active phase banner in Markdown:
+     `### [PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` (or active phase `[PHASE 2/5]`, `[PHASE 3/5]`, etc.)
+     followed by a one-sentence summary of the action being taken.
+   - The 5 phases:
+     - `### [PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` : Architecture, coding, strict idiomatic craft.
+     - `### [PHASE 2/5 : VALIDATION NATIVE & TESTS CI]` : Native toolchain verification (`cargo test && cargo clippy`, `tsc`, `pytest`).
+     - `### [PHASE 3/5 : AUDIT LOCAL IMPITOYABLE (0 TOKENS)]` : Adversarial audit of `git diff` via LM Studio (`execute_local_task`).
+     - `### [PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : *(If rejected)* Resolving `[BLOCKING]` defects and re-auditing.
+     - `### [PHASE 5/5 : RAPPORT DÉTAILLÉ & PROTOCOLE DE TEST]` : Final restitution before commit gate.
 
 2. **Standardized Implementation Report**:
    Every completion turn MUST provide:
