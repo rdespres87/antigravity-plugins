@@ -104,3 +104,27 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
    - You are strictly FORBIDDEN from running `git commit` or `git push` autonomously.
    - Before every commit: display the unified diff, propose a clear atomic commit message, and wait for explicit user approval.
    - Before every `git push`: request explicit remote push authorization.
+
+---
+
+## 7. Mandatory Phase Tracking & Detailed Test Protocol Reporting
+
+Across EVERY task (feature development, refactoring, or bug fix), the agent MUST explicitly trace progress using clear phase banners and provide a comprehensive test protocol:
+
+1. **Explicit Phase Banners**:
+   - `[PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` : Architecture, coding, strict idiomatic craft.
+   - `[PHASE 2/5 : VALIDATION NATIVE & TESTS CI]` : Native toolchain verification (`cargo test && cargo clippy`, `tsc`, `pytest`).
+   - `[PHASE 3/5 : AUDIT LOCAL IMPITOYABLE (0 TOKENS)]` : Adversarial audit of `git diff` via LM Studio (`execute_local_task`).
+   - `[PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : *(If rejected)* Resolving `[BLOCKING]` defects and re-auditing.
+   - `[PHASE 5/5 : RAPPORT DÉTAILLÉ & PROTOCOLE DE TEST]` : Final restitution before commit gate.
+
+2. **Standardized Implementation Report**:
+   Every completion turn MUST provide:
+   - **Modified Files**: Clickable links (`file://...`) and exact responsibilities changed.
+   - **Local Audit Verdict**: Name of the active local model, token cost (0 tokens), and `APPROVED` status.
+   - **CI Status**: Exact number of unit/integration tests passing and confirmation of zero linter warnings.
+
+3. **Reproducible Test Protocol for the User**:
+   The agent MUST provide actionable instructions explaining how the user can independently verify the changes:
+   - **Automated CLI Test Commands**: Exact commands to run targeted tests and the full suite.
+   - **Manual / Visual Step-by-Step Scenario**: Specific UI steps, edge-case values to input, and expected visual/functional outcomes vs failure modes prevented.
