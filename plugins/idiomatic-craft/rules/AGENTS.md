@@ -143,7 +143,7 @@ Across EVERY task (feature development, refactoring, or bug fix), the agent MUST
      - `### [PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` : Architecture, coding, strict idiomatic craft.
      - `### [PHASE 2/5 : VALIDATION NATIVE & TESTS CI]` : Native toolchain verification (`cargo test && cargo clippy`, `tsc`, `pytest`).
      - `### [PHASE 3/5 : AUDIT LOCAL IMPITOYABLE (0 TOKENS)]` : Adversarial audit of `git diff` via LM Studio (`execute_local_task`).
-     - `### [PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : *(If rejected)* Resolving `[BLOCKING]` defects and re-auditing.
+     - `### [PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : Mandatory step. If `REJECTED`: resolve `[BLOCKING]` defects and re-audit. If `APPROVED`: confirm `No blocking defects detected (Local audit APPROVED on first pass, 0 fixes required)`.
      - `### [PHASE 5/5 : RAPPORT DÉTAILLÉ & PROTOCOLE DE TEST]` : Final restitution before commit gate.
 
 2. **Standardized Implementation Report**:
