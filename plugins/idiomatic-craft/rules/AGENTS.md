@@ -77,4 +77,5 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
 ## 5. Enforcement Across Tiers & Adversarial Review
 
 - **Tier 1 (Local Model)**: When generating code via `execute_local_task`, the prompt must include language idiomaticity constraints. Any clunky construct must be caught in the auto-healing loop.
+- **Mandatory Merciless Local Audit**: After EVERY code development, refactoring, or bug fix across any project, the agent MUST invoke the local model (LM Studio via `execute_local_task` at 0 cloud tokens) for an adversarial, merciless audit (`merciless-local-audit` skill). The local auditor aggressively flags non-idiomatic patterns (lazy `.clone()`, `unwrap`/`expect` in production paths, C-style manual indexing, non-strict types, hidden allocations) as **blocking defects** that must be resolved before proceeding.
 - **Grill Inquisitor**: The Inquisitor must flag non-idiomatic code, archaic syntax, code smells, or unnecessary copies/allocations as **blocking defects**, forcing the Maker to rewrite.
