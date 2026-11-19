@@ -11,8 +11,17 @@ Global, language-agnostic code craftsmanship standards enforced across all proje
 - **Python**: Full PEP 484/585 type hints, frozen dataclasses / Pydantic, context managers, targeted exception handling.
 - **Modern C++**: Strict RAII (smart pointers, no raw new/delete), `std::string_view` / `std::span`, const correctness.
 
-#### Enforcement
-- **Mandatory Merciless Local Audit**: After **every** development, refactoring, or bug fix, the agent automatically triggers an adversarial audit on the local model (LM Studio via `execute_local_task` at 0 cloud tokens) via the `merciless-local-audit` skill. Code smells, non-idiomatic patterns, and missing tests are flagged as blocking defects before commit.
+#### Governance & Lifecycle Protocol
+- **Continuous 5-Phase Lifecycle**: Every task follows an explicit state machine with banners emitted once at each phase transition:
+  1. `[PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` : Architecture, strict TDD, and idiomatic craft.
+  2. `[PHASE 2/5 : VALIDATION NATIVE & TESTS CI]` : Zero compiler warnings, 100% green native tests.
+  3. `[PHASE 3/5 : AUDIT LOCAL IMPITOYABLE (0 TOKENS)]` : Adversarial audit by local offline model (LM Studio Qwen 35B) via `merciless-local-audit`.
+  4. `[PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : Non-optional state confirming 0 defects if approved, or tracing resolution of blocking findings if rejected.
+  5. `[PHASE 5/5 : RAPPORT DÉTAILLÉ & PROTOCOLE DE TEST]` : Final test commands and manual verification scenario before commit gates.
+- **Two-Stage Consent Gate (`ask_question`)**:
+  - *Gate A (Local Commit)*: Interactive choice box to authorize local commit. Strict separation: `git push` is never bundled into this gate.
+  - *Gate B (Remote Push)*: Separate subsequent turn requesting push permission, defaulting to keeping commits local to preserve CI runner quotas.
+- **Mandatory New Project Scaffolding Protocol**: When bootstrapping or entering any workspace lacking agent state, the agent is strictly forbidden from writing domain code before establishing root `AGENTS.md` and `docs/agent/{SESSION_STATE,TASKS,HANDOFF}.md` (via skill `project-scaffold`).
 
 ## Installation
 
