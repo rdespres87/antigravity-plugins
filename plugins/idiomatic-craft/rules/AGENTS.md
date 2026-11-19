@@ -36,6 +36,14 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
    - Code must pass `cargo clippy --all-targets -- -D warnings` with zero warnings.
    - Never silence linter warnings with `#[allow(...)]` without a clear, documented rationale.
 
+7. **Strict Test-Driven Development (TDD) Mandate**:
+   - Every feature, endpoint, algorithm, and bug fix MUST follow strict TDD: `Red -> Verify Failure -> Green -> Refactor`.
+   - **Step 1 (Red)**: Write unit/integration tests with deterministic synthetic fixtures (boundary cases, edge values, known ground-truth inputs) BEFORE writing production code.
+   - **Step 2 (Verify Failure)**: Run tests to confirm they fail for the intended reason.
+   - **Step 3 (Green)**: Implement the minimal, clean, idiomatic code to make the tests pass.
+   - **Step 4 (Refactor)**: Clean up duplication, sharpen types, ensure zero allocations/panics, and verify zero compiler/linter warnings.
+   - In tests: return `Result<(), ...>` using the `?` operator or use `assert!`, `assert_eq!`, `matches!`. Avoid `.unwrap()` / `.expect()` in test bodies where possible.
+
 ---
 
 ## 2. TypeScript / JavaScript Standards
