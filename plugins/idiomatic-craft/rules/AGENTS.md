@@ -108,10 +108,25 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
 4. **Pre-Commit README & Documentation Sync**:
    - Before committing any new capability, configuration option, hook, or API change, evaluate and update the relevant `README.md` and docs within the same logical scope. Documentation is never an afterthought; it lands alongside the code it describes.
 
-5. **Explicit Human-in-the-Loop Consent (Zero Rogue Commits / Pushes)**:
-   - You are strictly FORBIDDEN from running `git commit` or `git push` autonomously.
-   - Before every commit: display the unified diff, propose a clear atomic commit message, and wait for explicit user approval.
-   - Before every `git push`: request explicit remote push authorization.
+5. **Explicit Two-Stage Consent Gate via Interactive Dialogs (`ask_question`)**:
+   - **Strict Separation of Commit and Push**: You are strictly FORBIDDEN from bundling `git commit` and `git push` into a single request or turn. They represent two independent gates.
+   - **Gate A (Local Commit Authorization)**:
+     - Display the full unified diff in chat, summarize the test status, and propose a clear atomic commit message.
+     - You MUST invoke the `ask_question` tool to present an interactive choice box:
+       - Question: `"Souhaitez-vous enregistrer ce commit atomique localement ?"`
+       - Options:
+         - `"(Recommended) Oui, enregistrer le commit local (sans push)"`
+         - `"Ajuster le message ou le périmètre du commit"`
+         - `"Annuler / apporter d'autres modifications"`
+     - Never execute `git commit` without explicit confirmation via `ask_question`.
+   - **Gate B (Remote Push Authorization - Dedicated Subsequent Turn)**:
+     - After (and only after) the local commit is successfully created, never assume a remote push is desired.
+     - In a separate turn, you MUST ask using `ask_question`:
+       - Question: `"Le commit local est enregistré. Souhaitez-vous pousser les modifications vers origin/main ?"`
+       - Options:
+         - `"(Recommended) Non, conserver en local (préserve les quotas des runners CI)"`
+         - `"Oui, pousser vers origin/main"`
+     - Never run `git push` without explicit selection of the push option.
 
 ---
 
