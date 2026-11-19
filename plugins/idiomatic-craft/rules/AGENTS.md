@@ -134,11 +134,11 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
 
 Across EVERY task (feature development, refactoring, or bug fix), the agent MUST explicitly trace progress using clear phase banners and provide a comprehensive test protocol:
 
-1. **Explicit Phase Banners (MANDATORY FIRST-TOKEN OUTPUT BEFORE ANY TOOL CALL)**:
-   - **Zero Silent Tool Calls**: You are strictly forbidden from calling tools (`read_file`, `edit_file`, `run_command`, etc.) silently with empty prose.
-   - **First Visible Markdown Token**: At the very start of every turn and **BEFORE invoking any tool**, you MUST output visible text in the chat declaring the active phase banner in Markdown:
+1. **Explicit Phase Banners (EMITTED ONCE AT PHASE TRANSITIONS ONLY)**:
+   - **Zero Silent Start on Phase Transition**: When entering a new phase (e.g. starting Phase 1, moving to Phase 2, entering Phase 3, or returning to Phase 1 upon test failure), you MUST output the Markdown phase banner as the first visible token in chat:
      `### [PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` (or active phase `[PHASE 2/5]`, `[PHASE 3/5]`, etc.)
      followed by a one-sentence summary of the action being taken.
+   - **Do NOT Repeat within the Same Phase**: Subsequent tool calls and intermediate steps within the *same* phase must NOT repeat the `### [PHASE X/5]` header. Once the banner has been emitted for the active phase, proceed with tools and concise progress notes without reprinting the phase banner until transitioning to the next phase.
    - The 5 phases:
      - `### [PHASE 1/5 : CONCEPTION & DÉVELOPPEMENT]` : Architecture, coding, strict idiomatic craft.
      - `### [PHASE 2/5 : VALIDATION NATIVE & TESTS CI]` : Native toolchain verification (`cargo test && cargo clippy`, `tsc`, `pytest`).
