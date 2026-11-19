@@ -156,3 +156,17 @@ Across EVERY task (feature development, refactoring, or bug fix), the agent MUST
    The agent MUST provide actionable instructions explaining how the user can independently verify the changes:
    - **Automated CLI Test Commands**: Exact commands to run targeted tests and the full suite.
    - **Manual / Visual Step-by-Step Scenario**: Specific UI steps, edge-case values to input, and expected visual/functional outcomes vs failure modes prevented.
+
+---
+
+## 8. Mandatory New Project Scaffolding Protocol
+
+Whenever starting a new project, workspace, library, or application from scratch, or when entering a codebase lacking agent tracking files:
+1. **Scaffold Before Production Code**: You are strictly FORBIDDEN from writing domain code or algorithms before the persistent scaffolding is established.
+2. **Mandatory 5-File Scaffolding** (see skill `project-scaffold`):
+   - Root `AGENTS.md` : Declaring global Antigravity rules apply automatically, linking to domain state, and documenting project-specific constraints.
+   - `docs/agent/SESSION_STATE.md` : Initial verified toolchain and milestone state.
+   - `docs/agent/TASKS.md` : Initial task decomposition across phases.
+   - `docs/agent/HANDOFF.md` : First actionable task.
+   - `.gitignore` : Ignoring build targets, `.headroom/`, and temporary artifacts.
+3. **Commit Initial Scaffolding**: Commit the baseline scaffold atomically via the Gate A `ask_question` dialog (`chore(scaffold): initialize project architecture and agent tracking state`) before commencing Phase 1 feature development.
