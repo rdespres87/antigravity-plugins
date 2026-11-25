@@ -18,10 +18,12 @@ Global, language-agnostic code craftsmanship standards enforced across all proje
   3. `[PHASE 3/5 : AUDIT LOCAL IMPITOYABLE (0 TOKENS)]` : Adversarial audit by local offline model (LM Studio Qwen 35B) via `merciless-local-audit`.
   4. `[PHASE 4/5 : AUTO-HEALING & CORRECTIFS]` : Non-optional state confirming 0 defects if approved, or tracing resolution of blocking findings if rejected.
   5. `[PHASE 5/5 : RAPPORT DÉTAILLÉ & PROTOCOLE DE TEST]` : Final test commands and manual verification scenario before commit gates.
+- **Zero Ephemeral Tracking References**: Code comments, docstrings, and Git commit messages must never contain ticket/issue numbers, phase/sprint/step numbers, or audit version labels.
 - **Two-Stage Consent Gate (`ask_question`)**:
   - *Gate A (Local Commit)*: Interactive choice box to authorize local commit. Strict separation: `git push` is never bundled into this gate.
   - *Gate B (Remote Push)*: Separate subsequent turn requesting push permission, defaulting to keeping commits local to preserve CI runner quotas.
 - **Mandatory New Project Scaffolding Protocol**: When bootstrapping or entering any workspace lacking agent state, the agent is strictly forbidden from writing domain code before establishing root `AGENTS.md` and `docs/agent/{SESSION_STATE,TASKS,HANDOFF}.md` (via skill `project-scaffold`).
+- **Standardized Maturity Audit Protocol**: Automatically triggers the `maturity-audit` skill on any maturity audit request, enforcing 12 universal axes (including performance & bottlenecks) plus conditional domain packs (Real-Time Audio/DSP, Image/GPU/EDR, Desktop GUI/UX) with zero extra prompting.
 
 ## Installation
 

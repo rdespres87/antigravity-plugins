@@ -108,7 +108,11 @@ Writing "transliterated" code (e.g. C-style code written in Rust, Java-style cla
 4. **Pre-Commit README & Documentation Sync**:
    - Before committing any new capability, configuration option, hook, or API change, evaluate and update the relevant `README.md` and docs within the same logical scope. Documentation is never an afterthought; it lands alongside the code it describes.
 
-5. **Explicit Two-Stage Consent Gate via Interactive Dialogs (`ask_question`)**:
+5. **Zero Ticket, Phase, or Ephemeral Tracking References (Code Comments & Commit Messages)**:
+   - **Strictly Forbidden**: Code comments (`//`, `/* */`, `#`, docstrings) and Git commit messages MUST NEVER contain ticket/issue numbers (e.g. `JIRA-123`, `#42`, `E1`, `A03`, `T-12`), phase/sprint/step/audit numbers (e.g. `Phase 16`, `Audit v8`, `Sprint 3`, `Step 2`, `P0`), or ephemeral plan identifiers.
+   - Comments and commit messages must remain timeless, self-contained, and describe domain intent (*why* / *what*) only. The local Inquisitor flags any violation as a `[BLOCKING]` defect.
+
+6. **Explicit Two-Stage Consent Gate via Interactive Dialogs (`ask_question`)**:
    - **Strict Separation of Commit and Push**: You are strictly FORBIDDEN from bundling `git commit` and `git push` into a single request or turn. They represent two independent gates.
    - **Gate A (Local Commit Authorization)**:
      - Display the full unified diff in chat, summarize the test status, and propose a clear atomic commit message.
@@ -170,3 +174,10 @@ Whenever starting a new project, workspace, library, or application from scratch
    - `docs/agent/HANDOFF.md` : First actionable task.
    - `.gitignore` : Ignoring build targets, `.headroom/`, and temporary artifacts.
 3. **Commit Initial Scaffolding**: Commit the baseline scaffold atomically via the Gate A `ask_question` dialog (`chore(scaffold): initialize project architecture and agent tracking state`) before commencing Phase 1 feature development.
+
+---
+
+## 9. Mandatory Standardized Maturity Audit Protocol
+
+Whenever the user requests a project maturity audit (e.g., *"lance un audit de maturité"*, *"maturity audit"*, *"audit complet"*), you MUST automatically load and execute the **`maturity-audit`** skill (`~/.gemini/config/skills/maturity-audit/SKILL.md`) without asking the user to specify criteria.
+- It enforces all 12 universal axes (architecture, sizing, state/typestate, arity, safety/lints, tests/coverage/QA, concurrency, persistence, i18n, CI/CD/security/docs, comment/commit hygiene, performance/allocations/bottlenecks) plus applicable domain-specific packs (Real-Time Audio/DSP, Image/Color/GPU/EDR, Desktop GUI/UX), quantitative thresholds, local Inquisitor verification (`execute_local_task(role="inquisitor")`), and the standardized `/10` scorecard + P0/P1/P2 remediation report.
